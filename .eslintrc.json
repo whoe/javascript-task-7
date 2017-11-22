@@ -1,0 +1,23 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2017
+  },
+  "extends": "hrundel/node",
+  "rules": {
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "log"
+        ]
+      }
+    ],
+    "no-use-before-define": [
+      "error",
+      {
+        "variables": false,
+        "functions": false
+      }
+    ]
+  }
+}
