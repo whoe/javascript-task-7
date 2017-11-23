@@ -1,7 +1,4 @@
 {
-  "parserOptions": {
-    "ecmaVersion": 2017
-  },
   "extends": "hrundel/node",
   "rules": {
     "no-console": [
