@@ -29,7 +29,6 @@ function getTranslation(lang, text) {
 }
 
 const langs = ['be', 'uk', 'en', 'fr', 'de', 'it', 'pl', 'tr', 'th', 'ja'];
-
 const text = 'дайте мне воды';
 
 const jobs = langs.map(lang => getTranslation.bind(null, lang, text));
