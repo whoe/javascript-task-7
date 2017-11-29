@@ -1,6 +1,6 @@
 'use strict';
 
-exports.isStar = false;
+exports.isStar = true;
 exports.runParallel = runParallel;
 
 function limitedPromiseByTime(wrappedJob, timeout) {
