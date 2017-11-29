@@ -29,8 +29,8 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
                 jobs[jobIndex]()
             ];
             Promise.race(concurents)
-                .then(result => handleResult(result, jobIndex))
-                .catch(result => handleResult(result, jobIndex));
+                .catch(result => handleResult(result, jobIndex))
+                .then(result => handleResult(result, jobIndex));
         }
 
         function handleResult(result, jobIndex) {
