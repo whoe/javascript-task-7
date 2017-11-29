@@ -36,6 +36,10 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
                 .then(result => {
                     results[jobIndex] = result;
                     runJob(nextJob++);
+                })
+                .catch(result => {
+                    results[jobIndex] = result;
+                    runJob(nextJob++);
                 });
         }
     });
