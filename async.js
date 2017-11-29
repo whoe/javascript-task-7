@@ -22,14 +22,6 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
         }
 
         function runJob(jobIndex) {
-            if (countResults === jobs.length) {
-                resolve(results);
-
-                return;
-            }
-            if (jobIndex >= jobs.length) {
-                return;
-            }
             let concurents = [
                 new Promise((resolveTimeout) => {
                     setTimeout(resolveTimeout, timeout, new Error('Promise timeout'));
@@ -37,16 +29,20 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
                 jobs[jobIndex]()
             ];
             Promise.race(concurents)
-                .then(result => {
-                    results[jobIndex] = result;
-                    countResults++;
-                    runJob(nextJob++);
-                })
-                .catch(result => {
-                    results[jobIndex] = result;
-                    countResults++;
-                    runJob(nextJob++);
-                });
+                .then(result => handleResult(result, jobIndex))
+                .catch(result => handleResult(result, jobIndex));
+        }
+
+        function handleResult(result, jobIndex) {
+            results[jobIndex] = result;
+            if (++countResults === jobs.length) {
+                resolve(results);
+
+                return;
+            }
+            if (nextJob < jobs.length) {
+                runJob(nextJob++);
+            }
         }
     });
 }
