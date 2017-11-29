@@ -12,6 +12,7 @@ exports.runParallel = runParallel;
 function runParallel(jobs, parallelNum, timeout = 1000) {
     return new Promise((resolve) => {
         let results = [];
+        let countResults = 0;
         let nextJob = 0;
         if (jobs.length === 0) {
             return [];
@@ -21,9 +22,12 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
         }
 
         function runJob(jobIndex) {
-            if (jobIndex >= jobs.length) {
+            if (countResults === jobs.length) {
                 resolve(results);
 
+                return;
+            }
+            if (jobIndex >= jobs.length) {
                 return;
             }
             let concurents = [
@@ -35,10 +39,12 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
             Promise.race(concurents)
                 .then(result => {
                     results[jobIndex] = result;
+                    countResults++;
                     runJob(nextJob++);
                 })
                 .catch(result => {
                     results[jobIndex] = result;
+                    countResults++;
                     runJob(nextJob++);
                 });
         }
