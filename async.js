@@ -15,7 +15,7 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
         let countResults = 0;
         let nextJob = 0;
         if (jobs.length === 0) {
-            return [];
+            resolve([]);
         }
         while (nextJob < parallelNum && nextJob < jobs.length) {
             runJob(nextJob++);
