@@ -14,7 +14,7 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
         let results = [];
         let countResults = 0;
         let nextJob = 0;
-        if (jobs.length === 0) {
+        if (jobs.length === 0 || parallelNum <= 0) {
             resolve([]);
         }
         while (nextJob < parallelNum && nextJob < jobs.length) {
@@ -29,8 +29,8 @@ function runParallel(jobs, parallelNum, timeout = 1000) {
                 jobs[jobIndex]()
             ];
             Promise.race(concurents)
-                .catch(result => handleResult(result, jobIndex))
-                .then(result => handleResult(result, jobIndex));
+                .then(result => handleResult(result, jobIndex))
+                .catch(result => handleResult(result, jobIndex));
         }
 
         function handleResult(result, jobIndex) {
